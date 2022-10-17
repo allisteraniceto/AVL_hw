@@ -40,8 +40,23 @@ public:
         return root; 
     }
     //4 cases
-    AVLtree llRotate(){};
-    AVLtree lrRotate(){};
-    AVLtree rrRotate(){};
+    AVLtree llRotate(AVLnode* parent){ //LEFT LEFT ROTATE (right rotate only)
+        AVLnode *newP; //new parent
+        newP=parent->left; //left child becomes parent
+        parent->left=newP->right; //left child points to newP right child (null)
+        newP->right=parent; //newp right child points to parent node
+        cout << "Performed left left rotation" << endl;
+        return newP; //return sub tree
+    }
+    AVLtree lrRotate(AVLnode* parent){ 
+    }
+    AVLtree rrRotate(AVLnode* parent){ //RIGHT RIGHT ROTATE (left rotate only)
+        AVLnode *newP; //new parent
+        newP=parent->right; //right child becomes parent
+        parent->right=newP->left; //right child points to newP left (null)
+        newP->left=parent;
+        cout << "Performed right right rotation" << endl;
+        return newP; 
+    }
     AVLtree rlRotate(){};
 };
