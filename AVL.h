@@ -11,9 +11,9 @@ private:
     AVLnode<T>* right; //pointer to right child
 public:
     AVLnode(){ //default constructor
-        data = T();
-        right = 0;
-        left = 0;
+        data = T(); //template syntax
+        right = null; //child pointers to null
+        left = null;
     }
 };
 
@@ -23,6 +23,22 @@ private:
     AVLnode<T>* root; //pointer to root
     int balanceFactor; //balance factor
 public:
+    AVLtree(){
+        root=null;
+        int=0;
+    }
+    AVLnode insert(AVLnode<T>root, T data){
+        if (root==null){ //base case
+            root->T;
+        }
+        if (data > root->T){ //if data > parent
+            root->right=insert(root, data); //recursive implementation
+        }
+        else if (data < root->T){ //if data < parent
+            root->left=insert(root, data);
+        }
+        return root; 
+    }
     //4 cases
     AVLtree llRotate(){};
     AVLtree lrRotate(){};
