@@ -21,7 +21,7 @@ int compareNode(T left, T right){
 }
 
 int main(){
-    AVLtree<int> tree;
+    AVLtree<int> tree(compareNode);
     tree.insert(2);
     tree.insert(392);
     tree.insert(239);
