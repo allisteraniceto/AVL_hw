@@ -21,7 +21,8 @@ int compareNode(T left, T right){
 }
 
 int main(){
-    AVLtree<int> tree(compareNode);
+    int(*compare)(int , int)=compareNode; //function pointer to compareNode named *scompare
+    AVLtree<int> tree(compare);
     tree.insert(2);
     tree.insert(392);
     tree.insert(239);
@@ -29,3 +30,5 @@ int main(){
     tree.insert(57009);
     return 0;
 }
+
+//need to put in second parameter into insert -> eg. insert(root, 3209)
