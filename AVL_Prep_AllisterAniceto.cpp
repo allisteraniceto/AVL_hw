@@ -60,8 +60,23 @@ public:
     AVLtree(int (*compare_ptr)(T,T)){ //constructor has parameter that takes in function pointer
         /*
         root points to null
-        
+        balance factor set to 0
         */
+    }
+    void inorder(){
+        /*
+        inorder traversal to tree
+        */
+    }
+    AVLnode insertNode(T data){ //insert any data type as parameter
+        /*
+        if root is null, insert at root (base case)
+        else if data > parent, insert to the right
+        else if data < parent, insert to the left
+        */
+    }
+    AVLnode deleteNode(T data){
+        
     }
     bool checkBalance(){
         /*
