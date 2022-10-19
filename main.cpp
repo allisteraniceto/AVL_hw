@@ -7,6 +7,7 @@ TASKS:
 
 -make compare function and make a function pointer as a parameter of AVLtree constructor
 -INSERTING INTO ROOT NODE WRONG 
+-lr and rl rotations might be wrong
 -insert deletion;
 
 */

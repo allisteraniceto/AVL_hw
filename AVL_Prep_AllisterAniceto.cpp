@@ -26,6 +26,7 @@ int main(){
 
 #pragma once
 #include <iostream>
+#include <algorithm> //to get max function to compare 
 using namespace std;
 
 template<typename T> //templated node
@@ -43,9 +44,14 @@ private:
         default constructor that takes in data for node
         */
     }
-    int getHeight(){
+    int calcHeight(){
         /*
         get height of right subtree and left subtree
+        find max between leftHeight and rightHeight then add 1
+        while tree is not null
+        recursively get height of left or right tree 
+        e.g. leftHeight = getHeight(tree->left);
+        return height
         */
     }
 
@@ -65,6 +71,25 @@ public:
         balance factor set to 0
         */
     }
+    int balanceFactor(AVLnode*<T> tree){
+        /*
+        calculate balance factor
+        access left height and right height from node
+        balance factor = left height - right height
+        */
+    }
+    AVLnode<T>* balance (AVLnode<T>* tree){
+        /*
+        take parent node that is unbalanced as argument
+        if balance factor > 1, then out of balance to the left
+            if left child has a child, balanceFactor(tree->l) > 0, left-left rotate
+            else left-right rotate
+        else if balance factor < -1, then out of balance to the right
+            if right child has a child, balanceFactor(tree->r) < -1, right-right rotate
+            else right left rotate;
+        return tree
+        */
+    }
     void inorder(){
         /*
         inorder traversal to tree
@@ -81,6 +106,7 @@ public:
         if root is null, insert at root (base case)
         else if data > parent, insert to the right
         else if data < parent, insert to the left
+        return root_ptr
         */
     }
     AVLnode<T>* deleteNode(T data){

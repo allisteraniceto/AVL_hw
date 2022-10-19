@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <algorithm> //to get max function to compare left & right heights
 using namespace std;
 
 //implement as templated class (can use multiple data types)
@@ -20,8 +21,21 @@ public:
     T getData(){
         return data;
     }
+    int calcHeight(AVLnode<T>* tree){
+        int height=0; //initialize height variable
+        if (tree != nullptr){ //while not a leaf node
+            leftHeight=calcHeight(tree->left); //get height of left tree recursively
+            rightHeight=calcHeight(tree->right);
+            int maxHeight=max(leftHeight, rightHeight); //returns higher value
+            height=maxHeight+1; //height algothrim
+        }
+        return height;
+    }
     int getLeftHeight(){
         return leftHeight;
+    }
+    int getRightHeight(){
+        return rightHeight;
     }
 };
 
