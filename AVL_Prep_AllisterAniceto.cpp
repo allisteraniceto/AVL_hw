@@ -110,7 +110,10 @@ public:
         */
     }
     AVLnode<T>* deleteNode(T data){
-        
+        /*
+        searchfor node to be delete (we can use inorder)
+        4 cases for removal
+        */
     }
     
     AVLnode<T>* llRotate(){
