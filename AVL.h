@@ -35,26 +35,29 @@ public:
     AVLtree(int(*compare)(T, T)){
         root=nullptr;
         int balanceFactor=0;
-        bool checkBalance=NULL;
+        bool checkBalance=true;
     }
-    AVLnode insert(AVLnode<T> *root_ptr, T dataInsert){
-        data=T;
-        if (root==nullptr){ //base case
-            root->T;
+    void insertNode(T data){ //function only takes data as parameter so root is not accessed in main
+        insertNodePrivate(root, data);
+    }
+    AVLnode<T>* insertNodePrivate(AVLnode<T> *root_ptr, T dataInsert){
+        if (root_ptr==nullptr){ //base case or encounter leaf node then insert
+            root_ptr = new AVLnode<T>(dataInsert);
+            return root_ptr;
         }
-        else if (compare(dataInsert,root->T.getData()) == 1){ //if data > parent
-            root->right=insert(root, data); //recursive implementation
+        else if (compare(dataInsert, root_ptr->getData()) == 1){ //if data > parent
+            root_ptr->right=insert(root_ptr, dataInsert); //recursive implementation
         }
-        else if (compare(dataInsert, root->T.getData()) == -1){ //if data < parent
-            root->left=insert(root, data);
+        else if (compare(dataInsert, root->getData()) == -1){ //if data < parent
+            root_ptr->left=insert(root_ptr, dataInsert);
         }
-        else if (compare(dataInsert root->t.getData()) == 0){
+        else if (compare(dataInsert, root->getData()) == 0){
             cout << "CANNOT REPEAT DATA" << endl;
         }
-        return root; 
+        return root_ptr;
     }
     //4 cases
-    AVLtree llRotate(AVLnode<T>* parent){ //LEFT LEFT ROTATE (right rotate only)
+    AVLnode<T>* llRotate(AVLnode<T>* parent){ //LEFT LEFT ROTATE (right rotate only)
         AVLnode<T> *newP; //new parent node
         newP=parent->left; //left child becomes parent
         parent->left=newP->right; //left child points to newP right child (null)
@@ -62,7 +65,7 @@ public:
         cout << "Performed left left rotation" << endl;
         return newP; //return sub tree
     }
-    AVLtree lrRotate(AVLnode<T>* parent){ //LEFT RIGHT ROTATE (right rotate, then rrRotate)
+    AVLnode<T>* lrRotate(AVLnode<T>* parent){ //LEFT RIGHT ROTATE (right rotate, then rrRotate)
         AVLnode<T>* tempParent; //for first rotation
         tempParent=parent->right; //right child becomes temp new parent used for right rotate
         tempParent->right=parent->right->left; // right rotation on temp new parent
@@ -70,7 +73,7 @@ public:
         cout << "Performed left right rotation" << endl;
         return rrRotate(parent); //now left rotate around parent
     }
-    AVLtree rrRotate(AVLnode<T>* parent){ //RIGHT RIGHT ROTATE (left rotate only)
+    AVLnode<T>* rrRotate(AVLnode<T>* parent){ //RIGHT RIGHT ROTATE (left rotate only)
         AVLnode<T> *newP; //new parent node
         newP=parent->right; //right child becomes parent
         parent->right=newP->left; //right child points to newP left (null)
@@ -78,7 +81,7 @@ public:
         cout << "Performed right right rotation" << endl;
         return newP; 
     }
-    AVLtree rlRotate(AVLnode<T>* parent){ //RIGHT LEFT ROTATE (left rotate, the llRotate)
+    AVLnode<T>* rlRotate(AVLnode<T>* parent){ //RIGHT LEFT ROTATE (left rotate, the llRotate)
         AVLnode<T>* tempParent;
         tempParent=parent->right; //temp new parent set to left child
         tempParent->left=parent->left->right; //right rotate around temp parent

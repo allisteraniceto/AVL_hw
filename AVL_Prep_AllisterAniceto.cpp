@@ -16,6 +16,8 @@ int compare(T left, T right){ //templated function used in parameter of avl cons
 //driver function
 int main(){
     /*
+    make function pointer, pointing to compare function
+    make an AVLtree object with function pointer as an argument 
     insert data into nodes here
     display tree after balancing
     */
@@ -68,15 +70,52 @@ public:
         inorder traversal to tree
         */
     }
-    AVLnode insertNode(T data){ //insert any data type as parameter
+    AVLnode<T>* insertNode(T data){
+        /*
+        insertNodePrivate here
+        function takes in data only as parameter so root is not accessed in main
+        */
+    }
+    AVLnode<T>* insertNodePrivate(AVLtree *root_ptr, T data){ //insert any data type as parameter
         /*
         if root is null, insert at root (base case)
         else if data > parent, insert to the right
         else if data < parent, insert to the left
         */
     }
-    AVLnode deleteNode(T data){
+    AVLnode<T>* deleteNode(T data){
         
+    }
+    
+    AVLnode<T>* llRotate(){
+        /*
+        left-left case
+        only one rotation needed
+        rotate right around grandparent
+        return new parent node
+        */
+    }
+    AVLnode<T>* rrRotate(){
+        /*
+        symmetrical case right-right
+        rotate left around grandparent
+        return new parent node
+        */
+    }
+    AVLnode<T>* lrRotate(){
+        /*
+        left-right case
+        2 rotations needed
+        rotate right then rotate left around grandparent (use llRotate)
+        return llRotate with new parent node as parameter
+        */
+    }
+    AVLnode<T>* rlRotate(){
+        /*
+        symmmetrical case right-left
+        rotate left, then rotate right around grandparent (use rrRotate)
+        return llRotate with ne parent node as parameter
+        */
     }
     bool checkBalance(){
         /*

@@ -6,6 +6,7 @@ using namespace std;
 TASKS:
 
 -make compare function and make a function pointer as a parameter of AVLtree constructor
+-INSERTING INTO ROOT NODE WRONG 
 -insert deletion;
 
 */
@@ -23,11 +24,11 @@ int compareNode(T left, T right){
 int main(){
     int(*compare)(int , int)=compareNode; //function pointer to compareNode named *scompare
     AVLtree<int> tree(compare);
-    tree.insert(2);
-    tree.insert(392);
-    tree.insert(239);
-    tree.insert(32);
-    tree.insert(57009);
+    tree.insertNode(2);
+    tree.insertNode(392);
+    tree.insertNode(239);
+    tree.insertNode(32);
+    tree.insertNode(57009);
     return 0;
 }
 
