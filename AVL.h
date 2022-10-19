@@ -14,9 +14,9 @@ private:
     bool checkBalance;
 public:
     AVLnode(){ //default constructor
-        data=nullptr;
-        right=nullptr; //child pointer to null
-        left=nullptr;
+        data=NULL;
+        right=left=nullptr; //child pointer to null
+        leftHeight=rightHeight=0; //left and right height default zero
     }
     AVLnode(T){ //overloaded constructor
         data = T;
