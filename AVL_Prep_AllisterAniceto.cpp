@@ -53,10 +53,16 @@ template <typename T>
 class AVLtree{
 private:
     /*
-    
-    
+    pointer to root node (AVLnode object)
+    int variable for balance factor
     */
 public:
+    AVLtree(int (*compare_ptr)(T,T)){ //constructor has parameter that takes in function pointer
+        /*
+        root points to null
+        
+        */
+    }
     bool checkBalance(){
         /*
         checks balance factor at the node

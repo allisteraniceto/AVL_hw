@@ -11,17 +11,11 @@ private:
     AVLnode<T>* right; //pointer to right child
     int leftHeight;
     int rightHeight;
-    bool checkBalance;
 public:
-    AVLnode(){ //default constructor
-        data=NULL;
+    AVLnode(T data){ //default constructor
+        this->data=data;
         right=left=nullptr; //child pointer to null
         leftHeight=rightHeight=0; //left and right height default zero
-    }
-    AVLnode(T){ //overloaded constructor
-        data = T;
-        right = nullptr; 
-        left = nullptr;
     }
     T getData(){
         return data;
@@ -36,10 +30,12 @@ class AVLtree{
 private:
     AVLnode<T>* root; //pointer to root
     int balanceFactor; //balance factor
+    bool checkBalance;
 public:
     AVLtree(int(*compare)(T, T)){
         root=nullptr;
-        int=0;
+        int balanceFactor=0;
+        bool checkBalance=NULL;
     }
     AVLnode insert(AVLnode<T> *root_ptr, T dataInsert){
         data=T;
