@@ -70,8 +70,21 @@ public:
         }
         return root_ptr;
     }
-    AVLnode<T>* balance(AVLnode<T>* tree){
-        
+    void deleteNode(T data){
+        deleteNodePrivate(root, data);
+    }
+    AVLnode<T>* deleteNodePrivate(){
+
+    }
+    int balanceFactor(AVLnode<T>* tree){
+        int lHeight;
+        int rHeight;
+        lHeight=root->calcHeight(tree->left); //calculate right height, it will also update rightHeight in AVLnode
+        rHeight=root->calcHeight(tree->right);
+        return rHeight-lHeight; //right height - left height
+    }
+    AVLnode<T>* balance(AVLnode<T> tree){
+        //balance is off when balance factor > 1 or < -1;
     }
     //4 cases
     AVLnode<T>* llRotate(AVLnode<T>* parent){ //LEFT LEFT ROTATE (right rotate only)
