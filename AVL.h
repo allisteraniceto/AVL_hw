@@ -70,6 +70,9 @@ public:
         }
         return root_ptr;
     }
+    AVLnode<T>* balance(AVLnode<T>* tree){
+        
+    }
     //4 cases
     AVLnode<T>* llRotate(AVLnode<T>* parent){ //LEFT LEFT ROTATE (right rotate only)
         AVLnode<T> *newP; //new parent node

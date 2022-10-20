@@ -93,6 +93,7 @@ public:
     void inorder(){
         /*
         inorder traversal to tree
+        using recursive method
         */
     }
     AVLnode<T>* insertNode(T data){
@@ -112,7 +113,14 @@ public:
     AVLnode<T>* deleteNode(T data){
         /*
         searchfor node to be delete (we can use inorder)
+        delete by copy method
+        check balance factors froom root node
         4 cases for removal
+        1. Node is deleted from the lefthand tree, and the right child has a balance factor of +1.
+        1. Node is deleted from the lefthand tree, and the right child has a balance factor of 0.
+        1. Node is deleted from the lefthand tree, the right child has a balance factor of -1, and the left subtree of the right child has a balance factor of -1.
+        1. Node is deleted from the lefthand tree, the right child has a balance factor of -1, and the left subtree of the right child has a balance factor of +1.
+        call balance if a balance factor of the 4 cases are found
         */
     }
     
