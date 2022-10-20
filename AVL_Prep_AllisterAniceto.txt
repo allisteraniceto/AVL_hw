@@ -13,13 +13,14 @@ int compare(T left, T right){ //templated function used in parameter of avl cons
     return 1; //return 1 
 }
 
-//driver function
+//driver program
 int main(){
     /*
     make function pointer, pointing to compare function
     make an AVLtree object with function pointer as an argument 
     insert data into nodes here
     display tree after balancing
+    insert nodes relating to all insertion and deletion cases (including symmetrical cases)
     */
     return 0;
 }
@@ -37,6 +38,7 @@ public:
     pointer to right child
     int variable to keep track of left height
     int variable to keep track of right height
+    int variable to keep count of nodes in tree
     */
 private:
     AVLnode(T data){
@@ -90,10 +92,14 @@ public:
         return tree
         */
     }
-    void inorder(){
+    void inorder(AVLnode<T>* root_ptr, T data){ //inorder search 
         /*
         inorder traversal to tree
         using recursive method
+        inorder(root->left);
+        print
+        inorder(roo->right);
+        if serach item is not found, throw exeption
         */
     }
     AVLnode<T>* insertNode(T data){
@@ -107,10 +113,17 @@ public:
         if root is null, insert at root (base case)
         else if data > parent, insert to the right
         else if data < parent, insert to the left
+        increment count variable by one every insert
         return root_ptr
         */
     }
-    AVLnode<T>* deleteNode(T data){
+    void deleteNode(T data){
+        /*
+        deleteNode function that calls deleteNodePrivate
+        so root node is not accessed in main
+        */
+    }
+    AVLnode<T>* deleteNodePrivate(AVL<T>* root_ptr, T data){
         /*
         searchfor node to be delete (we can use inorder)
         delete by copy method
@@ -121,6 +134,7 @@ public:
         1. Node is deleted from the lefthand tree, the right child has a balance factor of -1, and the left subtree of the right child has a balance factor of -1.
         1. Node is deleted from the lefthand tree, the right child has a balance factor of -1, and the left subtree of the right child has a balance factor of +1.
         call balance if a balance factor of the 4 cases are found
+        decrement count variable by 1 for every deletion
         */
     }
     
