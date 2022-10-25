@@ -45,11 +45,13 @@ private:
     AVLnode<T>* root; //pointer to root
     int balanceFactor; //balance factor
     bool checkBalance;
+    int (*compare)(T left,T right)
 public:
-    AVLtree(int(*compare)(T, T)){
+    AVLtree(int(*compare)(T left, T right)){
         root=nullptr;
         int balanceFactor=0;
         bool checkBalance=true;
+        this->compare=compare;
     }
     void insertNode(T data){ //function only takes data as parameter so root is not accessed in main
         insertNodePrivate(root, data);
