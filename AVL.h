@@ -37,6 +37,12 @@ public:
     int getRightHeight(){
         return rightHeight;
     }
+    void setLeft(AVLnode<T>*ptr){
+        this->left=ptr;
+    }
+    void setRight(AVLnode<T>*ptr){
+        this->right=ptr;
+    }
 };
 
 template <typename T>
@@ -45,13 +51,13 @@ private:
     AVLnode<T>* root; //pointer to root
     int balanceFactor; //balance factor
     bool checkBalance;
-    int (*compare)(T left,T right)
+    int (*comparePtr)(T left,T right);
 public:
-    AVLtree(int(*compare)(T left, T right)){
-        root=nullptr;
-        int balanceFactor=0;
-        bool checkBalance=true;
-        this->compare=compare;
+    AVLtree(int(*comparePtr)(T, T)){
+        this->root=nullptr;
+        this->balanceFactor=0;
+        this->checkBalance=true;
+        this->comparePtr=comparePtr;
     }
     void insertNode(T data){ //function only takes data as parameter so root is not accessed in main
         insertNodePrivate(root, data);
@@ -61,13 +67,13 @@ public:
             root_ptr = new AVLnode<T>(dataInsert);
             return root_ptr;
         }
-        else if (compare(dataInsert, root_ptr->getData()) == 1){ //if data > parent
+        else if (comparePtr(dataInsert, root_ptr->getData()) == 1){ //if data > parent
             root_ptr->right=insert(root_ptr, dataInsert); //recursive implementation
         }
-        else if (compare(dataInsert, root->getData()) == -1){ //if data < parent
+        else if (comparePtr(dataInsert, root->getData()) == -1){ //if data < parent
             root_ptr->left=insert(root_ptr, dataInsert);
         }
-        else if (compare(dataInsert, root->getData()) == 0){
+        else if (comparePtr(dataInsert, root->getData()) == 0){
             cout << "CANNOT REPEAT DATA" << endl;
         }
         return root_ptr;
@@ -78,7 +84,7 @@ public:
     AVLnode<T>* deleteNodePrivate(){
 
     }
-    int balanceFactor(AVLnode<T>* tree){
+    int calcBalanceFactor(AVLnode<T>* tree){
         int lHeight;
         int rHeight;
         lHeight=root->calcHeight(tree->left); //calculate right height, it will also update rightHeight in AVLnode
