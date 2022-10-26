@@ -9,19 +9,21 @@ DONE -make compare function and make a function pointer as a parameter of AVLtre
 DONE -INSERTING INTO ROOT NODE WRONG fix
 -lr and rl rotations might be wrong
 DONE -balance factor
+-inorder search function
 -balance function
--insert deletion
 -balance after every insertion
+-deleteNodePrivate function
+-checkBalance function
 
 */
 
 template<typename T>
 int compareNode(T left, T right){
-    if (left < right)
+    if (left < right) //if left node < right node, return -1
         return -1;
-    else if (left == right)
+    else if (left == right) //if left node = right node, return 0
         return 0;
-    else if (left > right)
+    else if (left > right) //if left node > right node, return 1
         return 1;
 }
 
