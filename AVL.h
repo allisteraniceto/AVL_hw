@@ -41,14 +41,14 @@ class AVLtree{
 private:
     AVLnode<T>* root; //pointer to root
     int balanceFactor; //balance factor
-    bool checkBalance;
+    //bool checkBalance;
     int (*comparePtr)(T left,T right);
     int count;
 public:
     AVLtree(int(*comparePtr)(T, T)){
         this->root=nullptr;
         this->balanceFactor=0;
-        this->checkBalance=true;
+        //this->checkBalnce=true;
         this->comparePtr=comparePtr;
     }
     int getCount(){
@@ -102,7 +102,9 @@ public:
         if (calcBalanceFactor(tree)>=-1 || calcBalanceFactor(tree) <=1){ //if -1 <= balance factor <= 1, tree is balanced
             return true;
         }
-        else false;
+        else{
+            return false;
+        }
     }
     AVLnode<T>* balance(AVLnode<T>* tree){
         //balance is off when balance factor > 1 or < -1;
@@ -112,14 +114,23 @@ public:
         }
         else{
             if (calcBalanceFactor(tree)<(-1)){ //if balance factor < -1, then balancing needed on left side
-                
+                if (balanceFactor(tree->left)==-1){ //if balance factor of left child is -1, left-left rototate
+                    tree=llRotate(tree);
+                }
+                else{   //if balance factor of left child is -1, right-left rotate;
+                    tree=rlRotate(tree);
+                }
             }
             if (calcBalanceFactor(tree)>1){ //if balance factor > 1, then balancing needed on right side
-
+                if (balanceFactor(tree->right)==1){ //if balance factor of right child is 1, right-right rotate
+                    tree=rrRotate(tree);
+                }
+                else{
+                    tree=lrRotate(tree); //if BF of right child = -1, left-right rotate
+                }
             } 
         }
-
-
+        return tree;
     }
     //4 cases
     AVLnode<T>* llRotate(AVLnode<T>* parent){ //LEFT LEFT ROTATE (right rotate only)
