@@ -30,7 +30,7 @@ public:
             leftHeight=calcHeight(tree->left); //get height of left tree recursively
             rightHeight=calcHeight(tree->right);
             int maxHeight=max(leftHeight, rightHeight); //returns higher value
-            height=maxHeight+1; //height algothrim
+            height=maxHeight+1; //height algothrim, (+1 because it doesnt count the parent node)
         }
         return height;
     }
@@ -43,12 +43,16 @@ private:
     int balanceFactor; //balance factor
     bool checkBalance;
     int (*comparePtr)(T left,T right);
+    int count;
 public:
     AVLtree(int(*comparePtr)(T, T)){
         this->root=nullptr;
         this->balanceFactor=0;
         this->checkBalance=true;
         this->comparePtr=comparePtr;
+    }
+    int getCount(){
+        return count;
     }
     void inorder(){
         inorderPrivate(root);
@@ -68,6 +72,7 @@ public:
         if (root_ptr==nullptr){ //base case or encounter leaf node then insert
             root_ptr = new AVLnode<T>(dataInsert);
             return root_ptr;
+            count++; //increment node count by 1;
         }
         else if (comparePtr(dataInsert, root_ptr->getData()) == 1){ //if data > parent, insert right
             root_ptr->right=insertNodePrivate(root_ptr->right, dataInsert); //recursive implementation
@@ -93,8 +98,28 @@ public:
         rHeight=root->calcHeight(tree->right);
         return rHeight-lHeight; //right height - left height
     }
-    AVLnode<T>* balance(AVLnode<T> tree){
+    bool checkBalance(AVLnode<T>* tree){
+        if (calcBalanceFactor(tree)>=-1 || calcBalanceFactor(tree) <=1){ //if -1 <= balance factor <= 1, tree is balanced
+            return true;
+        }
+        else false;
+    }
+    AVLnode<T>* balance(AVLnode<T>* tree){
         //balance is off when balance factor > 1 or < -1;
+        //first check balance of tree.
+        if (checkBalance(tree)){ //if tree is already balanced return tree
+            return tree;
+        }
+        else{
+            if (calcBalanceFactor(tree)<(-1)){ //if balance factor < -1, then balancing needed on left side
+                
+            }
+            if (calcBalanceFactor(tree)>1){ //if balance factor > 1, then balancing needed on right side
+
+            } 
+        }
+
+
     }
     //4 cases
     AVLnode<T>* llRotate(AVLnode<T>* parent){ //LEFT LEFT ROTATE (right rotate only)
