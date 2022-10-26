@@ -31,6 +31,7 @@ int main(){
     tree.insertNode(239);
     tree.insertNode(32);
     tree.insertNode(57009);
+    system("pause");
     return 0;
 }
 

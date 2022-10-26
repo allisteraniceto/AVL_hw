@@ -7,12 +7,12 @@ using namespace std;
 template <typename T>
 class AVLnode{
 private:
-    T data;
+    T data; //data is only private member
+public:
     AVLnode<T>* left; //pointer to left child
     AVLnode<T>* right; //pointer to right child
     int leftHeight;
     int rightHeight;
-public:
     AVLnode(T data){ //default constructor
         this->data=data;
         right=left=nullptr; //child pointer to null
@@ -30,18 +30,6 @@ public:
             height=maxHeight+1; //height algothrim
         }
         return height;
-    }
-    int getLeftHeight(){
-        return leftHeight;
-    }
-    int getRightHeight(){
-        return rightHeight;
-    }
-    void setLeft(AVLnode<T>*ptr){
-        this->left=ptr;
-    }
-    void setRight(AVLnode<T>*ptr){
-        this->right=ptr;
     }
 };
 
@@ -68,10 +56,10 @@ public:
             return root_ptr;
         }
         else if (comparePtr(dataInsert, root_ptr->getData()) == 1){ //if data > parent
-            root_ptr->right=insert(root_ptr, dataInsert); //recursive implementation
+            root_ptr->right=insertNodePrivate(root_ptr, dataInsert); //recursive implementation
         }
         else if (comparePtr(dataInsert, root->getData()) == -1){ //if data < parent
-            root_ptr->left=insert(root_ptr, dataInsert);
+            root_ptr->left=insertNodePrivate(root_ptr, dataInsert);
         }
         else if (comparePtr(dataInsert, root->getData()) == 0){
             cout << "CANNOT REPEAT DATA" << endl;
