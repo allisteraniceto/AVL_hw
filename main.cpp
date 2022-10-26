@@ -5,11 +5,13 @@ using namespace std;
 /* 
 TASKS:
 
--make compare function and make a function pointer as a parameter of AVLtree constructor
--INSERTING INTO ROOT NODE WRONG 
+DONE -make compare function and make a function pointer as a parameter of AVLtree constructor
+DONE -INSERTING INTO ROOT NODE WRONG fix
 -lr and rl rotations might be wrong
--balance and balance factor functions 
+DONE -balance factor
+-balance function
 -insert deletion
+-balance after every insertion
 
 */
 
