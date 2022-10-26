@@ -14,7 +14,6 @@ DONE -balance factor
 -balance after every insertion
 -deleteNodePrivate function
 -checkBalance function
-
 */
 
 template<typename T>
@@ -35,6 +34,7 @@ int main(){
     tree.insertNode(239);
     tree.insertNode(32);
     tree.insertNode(57009);
+    tree.inorder();
     system("pause");
     return 0;
 }

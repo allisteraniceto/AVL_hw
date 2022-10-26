@@ -21,6 +21,9 @@ public:
     T getData(){
         return data;
     }
+    void setData(T data){
+        this->data=data;
+    }
     int calcHeight(AVLnode<T>* tree){
         int height=0; //initialize height variable
         if (tree != nullptr){ //while not a leaf node
@@ -47,21 +50,32 @@ public:
         this->checkBalance=true;
         this->comparePtr=comparePtr;
     }
+    void inorder(){
+        inorderPrivate(root);
+    }
+    void inorderPrivate(AVLnode<T>* root_ptr){
+        if (root_ptr==nullptr){ //if ptr is null, exit function
+            return;
+        }
+        inorderPrivate(root_ptr->left);
+        cout << root_ptr->getData() << endl;
+        inorderPrivate(root_ptr->right);
+    }
     void insertNode(T data){ //function only takes data as parameter so root is not accessed in main
-        insertNodePrivate(root, data);
+        root=insertNodePrivate(root, data);
     }
     AVLnode<T>* insertNodePrivate(AVLnode<T> *root_ptr, T dataInsert){
         if (root_ptr==nullptr){ //base case or encounter leaf node then insert
             root_ptr = new AVLnode<T>(dataInsert);
             return root_ptr;
         }
-        else if (comparePtr(dataInsert, root_ptr->getData()) == 1){ //if data > parent
-            root_ptr->right=insertNodePrivate(root_ptr, dataInsert); //recursive implementation
+        else if (comparePtr(dataInsert, root_ptr->getData()) == 1){ //if data > parent, insert right
+            root_ptr->right=insertNodePrivate(root_ptr->right, dataInsert); //recursive implementation
         }
-        else if (comparePtr(dataInsert, root->getData()) == -1){ //if data < parent
-            root_ptr->left=insertNodePrivate(root_ptr, dataInsert);
+        else if (comparePtr(dataInsert, root_ptr->getData()) == -1){ //if data < parent, insert left
+            root_ptr->left=insertNodePrivate(root_ptr->left, dataInsert);
         }
-        else if (comparePtr(dataInsert, root->getData()) == 0){
+        else if (comparePtr(dataInsert, root_ptr->getData()) == 0){
             cout << "CANNOT REPEAT DATA" << endl;
         }
         return root_ptr;
