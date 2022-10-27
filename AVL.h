@@ -65,19 +65,26 @@ public:
         cout << root_ptr->getData() << endl;
         inorderPrivate(root_ptr->right);
     }
+    void searchTest(T data){
+        AVLnode<T>* found;
+        if (search(root,data)==nullptr){
+            cout << "DATA " << data << "NOT FOUND" << endl;
+        }
+        found = search(root, data);
+    }
     AVLnode<T>* search(AVLnode<T> *root_ptr, T data){
         if (root_ptr==nullptr){ //if tree is empty, exit function
             return root_ptr;
         }
         else{
-            search(root_ptr->left); //use inorder traversal to search for data
+            search(root_ptr->left, data); //use inorder traversal to search for data
             if (data == root_ptr->getData()){
+                cout << "FOUND: " << root_ptr->getData() << endl;
                 return root_ptr;
             }
-            search(root_ptr->right);
-            cout << "Data NOT FOUND" << endl; //output data is not found
+            search(root_ptr->right, data);
         }
-        return root_ptr; //if data not founc just return tree;
+        return nullptr; //if data not found return nullptrs;
     }
     void insertNode(T data){ //function only takes data as parameter so root is not accessed in main
         root=insertNodePrivate(root, data);
@@ -105,14 +112,14 @@ public:
         deleteNodePrivate(root, data);
     }
     AVLnode<T>* deleteNodePrivate(AVLnode<T> *root_ptr, T data){
-        
+        AVLnode<T>* tempRemove = root_ptr;
         if (root_ptr=nullptr){ //if tree is empty, return pointer
             return root_ptr;
         }
-
-        search(root_ptr, data); //look for node to be deleted and set to the data 
-        //delete by copy: copy child node, delete node, make child parent
-
+        else{
+            tempRemove = search(root_ptr, data); //look for node to be deleted and set to the data 
+            //delete by copy: copy child node, delete node, make child parent
+        }
     }
     int calcBalanceFactor(AVLnode<T>* tree){
         int lHeight;

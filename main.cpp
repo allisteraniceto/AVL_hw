@@ -16,6 +16,8 @@ DONE -balance after every insertion
 -deleteNodePrivate function
 DONE -checkBalance function
 DONE -count function
+-fix extra found
+-driver program
 */
 
 template<typename T>
@@ -37,8 +39,9 @@ int main(){
     tree.insertNode(32);
     tree.insertNode(57009);
     tree.inorder();
-    cout << tree.getCount();
-    system("pause");
+    tree.searchTest(32);
+    tree.searchTest(757);
+    cout << "# of nodes: " << tree.getCount();
     return 0;
 }
 
