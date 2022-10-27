@@ -9,11 +9,13 @@ DONE -make compare function and make a function pointer as a parameter of AVLtre
 DONE -INSERTING INTO ROOT NODE WRONG fix
 -lr and rl rotations might be wrong
 DONE -balance factor
--inorder search function
--balance function
--balance after every insertion
+DONE -inorder function
+-search function 
+DONE -balance function
+DONE -balance after every insertion
 -deleteNodePrivate function
--checkBalance function
+DONE -checkBalance function
+DONE -count function
 */
 
 template<typename T>

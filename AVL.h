@@ -59,11 +59,22 @@ public:
     }
     void inorderPrivate(AVLnode<T>* root_ptr){
         if (root_ptr==nullptr){ //if ptr is null, exit function
-            return;
+            return tree;
         }
         inorderPrivate(root_ptr->left);
         cout << root_ptr->getData() << endl;
         inorderPrivate(root_ptr->right);
+    }
+    AVLnode<T>* search(AVLnode<T> *root_ptr, T data){
+        if (root_ptr==nullptr){ //if ptr is null, exit function
+            return root_ptr;
+        }
+        search(root-ptr->left); //use inorder traversal to search for data
+        if (data == tree->getData()){
+            return root_ptr;
+        }
+        search(root_ptr->right);
+        return root_ptr; //if data not founc just return tree;       
     }
     void insertNode(T data){ //function only takes data as parameter so root is not accessed in main
         root=insertNodePrivate(root, data);
@@ -90,8 +101,10 @@ public:
     void deleteNode(T data){
         deleteNodePrivate(root, data);
     }
-    AVLnode<T>* deleteNodePrivate(){
-
+    AVLnode<T>* deleteNodePrivate(AVLnode<T> *root_ptr, T data){
+        root_ptr=search(data); //look for node to be deleted and set to the data 
+        //delete by copy: copy child node, delete node, make child parent
+        
     }
     int calcBalanceFactor(AVLnode<T>* tree){
         int lHeight;
