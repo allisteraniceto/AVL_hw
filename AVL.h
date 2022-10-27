@@ -66,21 +66,24 @@ public:
         inorderPrivate(root_ptr->right);
     }
     AVLnode<T>* search(AVLnode<T> *root_ptr, T data){
-        if (root_ptr==nullptr){ //if ptr is null, exit function
+        if (root_ptr==nullptr){ //if tree is empty, exit function
             return root_ptr;
         }
-        search(root_ptr->left); //use inorder traversal to search for data
-        if (data == root_ptr->getData()){
-            return root_ptr;
+        else{
+            search(root_ptr->left); //use inorder traversal to search for data
+            if (data == root_ptr->getData()){
+                return root_ptr;
+            }
+            search(root_ptr->right);
+            cout << "Data NOT FOUND" << endl; //output data is not found
         }
-        search(root_ptr->right);
-        return root_ptr; //if data not founc just return tree;       
+        return root_ptr; //if data not founc just return tree;
     }
     void insertNode(T data){ //function only takes data as parameter so root is not accessed in main
         root=insertNodePrivate(root, data);
     }
     AVLnode<T>* insertNodePrivate(AVLnode<T> *root_ptr, T dataInsert){
-        if (root_ptr==nullptr){ //base case or encounter leaf node then insert
+        if (root_ptr==nullptr){ //base case (root empty) or encounter leaf node then insert
             root_ptr = new AVLnode<T>(dataInsert);
             count++; //increment node count by 1;
             return root_ptr;
@@ -102,7 +105,12 @@ public:
         deleteNodePrivate(root, data);
     }
     AVLnode<T>* deleteNodePrivate(AVLnode<T> *root_ptr, T data){
-        root_ptr=search(data); //look for node to be deleted and set to the data 
+        
+        if (root_ptr=nullptr){ //if tree is empty, return pointer
+            return root_ptr;
+        }
+
+        search(root_ptr, data); //look for node to be deleted and set to the data 
         //delete by copy: copy child node, delete node, make child parent
 
     }
