@@ -37,6 +37,7 @@ int main(){
     tree.insertNode(32);
     tree.insertNode(57009);
     tree.inorder();
+    cout << tree.getCount();
     system("pause");
     return 0;
 }
