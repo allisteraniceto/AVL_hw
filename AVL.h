@@ -76,9 +76,11 @@ public:
         }
         else if (comparePtr(dataInsert, root_ptr->getData()) == 1){ //if data > parent, insert right
             root_ptr->right=insertNodePrivate(root_ptr->right, dataInsert); //recursive implementation
+            root_ptr=balance(root_ptr); //balance tree if unbalanced (right cases)
         }
         else if (comparePtr(dataInsert, root_ptr->getData()) == -1){ //if data < parent, insert left
             root_ptr->left=insertNodePrivate(root_ptr->left, dataInsert);
+            root_ptr=balance(root_ptr);
         }
         else if (comparePtr(dataInsert, root_ptr->getData()) == 0){
             cout << "CANNOT REPEAT DATA" << endl;
@@ -102,9 +104,7 @@ public:
         if (calcBalanceFactor(tree)>=-1 || calcBalanceFactor(tree) <=1){ //if -1 <= balance factor <= 1, tree is balanced
             return true;
         }
-        else{
-            return false;
-        }
+        return false;
     }
     AVLnode<T>* balance(AVLnode<T>* tree){
         //balance is off when balance factor > 1 or < -1;
@@ -114,7 +114,7 @@ public:
         }
         else{
             if (calcBalanceFactor(tree)<(-1)){ //if balance factor < -1, then balancing needed on left side
-                if (balanceFactor(tree->left)==-1){ //if balance factor of left child is -1, left-left rototate
+                if (calcBalanceFactor(tree->left)==-1){ //if balance factor of left child is -1, left-left rototate
                     tree=llRotate(tree);
                 }
                 else{   //if balance factor of left child is -1, right-left rotate;
@@ -122,7 +122,7 @@ public:
                 }
             }
             if (calcBalanceFactor(tree)>1){ //if balance factor > 1, then balancing needed on right side
-                if (balanceFactor(tree->right)==1){ //if balance factor of right child is 1, right-right rotate
+                if (calcBalanceFactor(tree->right)==1){ //if balance factor of right child is 1, right-right rotate
                     tree=rrRotate(tree);
                 }
                 else{
