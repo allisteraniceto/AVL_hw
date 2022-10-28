@@ -67,22 +67,24 @@ public:
     }
     void searchTest(T data){
         AVLnode<T>* found;
-        if (search(root,data)==nullptr){
-            cout << "DATA " << data << "NOT FOUND" << endl;
-        }
         found = search(root, data);
     }
-    AVLnode<T>* search(AVLnode<T> *root_ptr, T data){
+    AVLnode<T>* search(AVLnode<T> *root_ptr, T key){
         if (root_ptr==nullptr){ //if tree is empty, exit function
+            cout << key << " NOT FOUND!" << endl;
+            return root_ptr;
+        }
+        else if (root_ptr->getData() == key){ //if node searched is root OR node is found, return
+            cout << key << " FOUND!" << endl;
             return root_ptr;
         }
         else{
-            search(root_ptr->left, data); //use inorder traversal to search for data
-            if (data == root_ptr->getData()){
-                cout << "FOUND: " << root_ptr->getData() << endl;
-                return root_ptr;
+            if (key < root_ptr->getData()){ //if key is less than parent, search left tree
+                return search(root_ptr->left, key); //keep searching left
             }
-            search(root_ptr->right, data);
+            else if (key > root_ptr->getData()){ //if key is more than parent, search right
+                return search(root_ptr->right, key); //keep search right
+            }
         }
         return nullptr; //if data not found return nullptrs;
     }
