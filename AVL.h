@@ -70,7 +70,7 @@ public:
         found = search(root, data);
     }
     AVLnode<T>* search(AVLnode<T> *root_ptr, T key){
-        if (root_ptr==nullptr){ //if tree is empty, exit function
+        if (root_ptr==nullptr){ //if tree is empty OR node not found, exit function
             cout << key << " NOT FOUND!" << endl;
             return root_ptr;
         }

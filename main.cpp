@@ -41,6 +41,7 @@ int main(){
     tree.inorder();
     tree.searchTest(32);
     tree.searchTest(757);
+    tree.searchTest(57009);
     cout << "# of nodes: " << tree.getCount();
     return 0;
 }
