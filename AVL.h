@@ -105,7 +105,7 @@ public:
             root_ptr->left=insertNodePrivate(root_ptr->left, dataInsert);
             root_ptr=balance(root_ptr);
         }
-        else if (comparePtr(dataInsert, root_ptr->getData()) == 0){
+        else if (comparePtr(dataInsert, root_ptr->getData()) == 0){ //if data is repeated, print out error
             cout << "CANNOT REPEAT DATA" << endl;
         }
         return root_ptr;
