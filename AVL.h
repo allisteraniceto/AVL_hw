@@ -13,7 +13,12 @@ public:
     AVLnode<T>* right; //pointer to right child
     int leftHeight;
     int rightHeight;
-    AVLnode(T data){ //default constructor
+    AVLnode() { //defualt constructor
+        this->data = NULL;
+        right = left = nullptr;
+        leftHeight = rightHeight = 0;
+    }
+    AVLnode(T data){ 
         this->data=data;
         right=left=nullptr; //child pointer to null
         leftHeight=rightHeight=0; //left and right height default zero
@@ -68,6 +73,9 @@ public:
     void searchTest(T data){
         AVLnode<T>* found;
         found = search(root, data);
+        if (found!=nullptr){
+            cout << "THIS IS THE ITEM FOUND: " << found->getData() << endl;            
+        }
     }
     AVLnode<T>* search(AVLnode<T> *root_ptr, T key){
         if (root_ptr==nullptr){ //if tree is empty OR node not found, exit function
@@ -99,29 +107,49 @@ public:
         }
         else if (comparePtr(dataInsert, root_ptr->getData()) == 1){ //if data > parent, insert right
             root_ptr->right=insertNodePrivate(root_ptr->right, dataInsert); //recursive implementation
-            root_ptr=balance(root_ptr); //balance tree if unbalanced (right cases)
+            //root_ptr=balance(root_ptr); //balance tree if unbalanced (right cases)
         }
         else if (comparePtr(dataInsert, root_ptr->getData()) == -1){ //if data < parent, insert left
             root_ptr->left=insertNodePrivate(root_ptr->left, dataInsert);
-            root_ptr=balance(root_ptr);
+            //root_ptr=balance(root_ptr);
         }
         else if (comparePtr(dataInsert, root_ptr->getData()) == 0){ //if data is repeated, print out error
             cout << "CANNOT REPEAT DATA" << endl;
         }
+        root_ptr = balance(root_ptr); //balance root if it is unbalanced
         return root_ptr;
     }
     void deleteNode(T data){
-        deleteNodePrivate(root, data);
+        root=deleteNodePrivate(root, data);
     }
-    AVLnode<T>* deleteNodePrivate(AVLnode<T> *root_ptr, T data){
-        AVLnode<T>* tempRemove = root_ptr;
-        if (root_ptr=nullptr){ //if tree is empty, return pointer
-            return root_ptr;
+    AVLnode<T>* deleteNodePrivate(AVLnode<T> *root_ptr, T key){
+        //FIRST: search for node to be deleted
+        if (root_ptr==nullptr){ //if tree is empty or node is not found, return pointer
+            return nullptr;
         }
-        else{
-            tempRemove = search(root_ptr, data); //look for node to be deleted and set to the data 
-            //delete by copy: copy child node, delete node, make child parent
+        else if (key < root_ptr->getData()){ //if key is less than parent, node to delete is in left subtree
+            root_ptr->left=deleteNodePrivate(root->left, key);
         }
+        else if (key > root_ptr->getData()){ //if key is greater than parent, node to delete is in right subtree
+            root_ptr->right=deleteNodePrivate(root->right, key);
+        }
+        else{ //if key = data, we are at the node to be deleted
+            
+        }
+
+        //USING SEARCH FUNCTION WILL NOT WORK (cannot get access to parent node)
+        // AVLnode<T>* tempRemove = root_ptr;
+        // if (root_ptr=nullptr){ //if tree is empty, return pointer
+        //     return root_ptr;
+        // }
+        // else{
+        //     tempRemove = search(root_ptr, data); //look for node to be deleted and when found set to tempRemove 
+        //     //delete by copy: copy child node, delete node, make child parent
+        //     //4 cases:
+        //     if (tempRemove->left==nullptr || tempRemove->right==nullptr){ //node to delete has one child, or no children
+                
+        //     }
+        // }
     }
     int calcBalanceFactor(AVLnode<T>* tree){
         int lHeight;
@@ -131,7 +159,7 @@ public:
         return rHeight-lHeight; //right height - left height
     }
     bool checkBalance(AVLnode<T>* tree){
-        if (calcBalanceFactor(tree)>=-1 || calcBalanceFactor(tree) <=1){ //if -1 <= balance factor <= 1, tree is balanced
+        if (calcBalanceFactor(tree)>=-1 && calcBalanceFactor(tree) <=1){ //if -1 <= balance factor <= 1, tree is balanced
             return true;
         }
         return false;
@@ -173,9 +201,12 @@ public:
     }
     AVLnode<T>* lrRotate(AVLnode<T>* parent){ //LEFT RIGHT ROTATE (right rotate, then rrRotate)
         AVLnode<T>* tempParent; //for first rotation
-        tempParent=parent->right; //right child becomes temp new parent used for right rotate
-        tempParent->right=parent->right->left; // right rotation on temp new parent
-        tempParent->left=nullptr; //tempParent left child set to null, now in right right case;
+        tempParent = parent->right;
+        parent->right = llRotate(tempParent);
+        //tempParent=parent->right->left; //right child becomes temp new parent used for right rotate
+        //tempParent->right=parent->right; // right rotation on temp new parent
+        //parent->right=tempParent; //parent right aqquires right rotated tempParent
+        //tempParent->left = nullptr; //set temp parent left pointer to null, now right right case
         cout << "Performed left right rotation" << endl;
         return rrRotate(parent); //now left rotate around parent
     }
@@ -190,8 +221,9 @@ public:
     AVLnode<T>* rlRotate(AVLnode<T>* parent){ //RIGHT LEFT ROTATE (left rotate, the llRotate)
         AVLnode<T>* tempParent;
         tempParent=parent->right; //temp new parent set to left child
-        tempParent->left=parent->left->right; //right rotate around temp parent
-        tempParent->right=nullptr; //set temp parent right pointer to null, now left left case
+        parent->right = llRotate(tempParent);
+        //tempParent->left=parent->left->right; //right rotate around temp parent
+        //tempParent->right=nullptr; //set temp parent right pointer to null, now left left case
         cout << "Performed right left rotation";
         return llRotate(parent); //return left left case
     }

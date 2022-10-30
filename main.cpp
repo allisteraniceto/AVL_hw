@@ -42,6 +42,7 @@ int main(){
     tree.searchTest(32);
     tree.searchTest(757);
     tree.searchTest(57009);
+    tree.deleteNode(392);
     cout << "# of nodes: " << tree.getCount();
     return 0;
 }
