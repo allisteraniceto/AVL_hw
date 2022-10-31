@@ -29,16 +29,13 @@ public:
     void setData(T data){
         this->data=data;
     }
-    int calcHeight(AVLnode<T>* tree){
-        int height=0; //initialize height variable
-        if (tree != nullptr){ //while not a leaf node
-            leftHeight=calcHeight(tree->left); //get height of left tree recursively
-            rightHeight=calcHeight(tree->right);
-            int maxHeight=max(leftHeight, rightHeight); //returns higher value
-            height=maxHeight+1; //height algothrim, (+1 because it doesnt count the parent node)
-        }
-        return height;
+    void setLeftHeight(int leftHeight){
+        this->leftHeight=leftHeight;
     }
+    void setRightHeight(int rightHeight){
+        this->rightHeight=rightHeight;
+    }
+
 };
 
 template <typename T>
@@ -58,6 +55,18 @@ public:
     }
     int getCount(){
         return count;
+    }
+    int calcHeight(AVLnode<T>* tree){
+        int height=0; //initialize height variable
+        int leftHeight=0;
+        int rightHeight=0;
+        if (tree != nullptr){ //while not a leaf node
+            leftHeight=calcHeight(tree->left); //get height of left tree recursively
+            rightHeight=calcHeight(tree->right);
+            int maxHeight=max(leftHeight, rightHeight); //returns higher value
+            height=maxHeight+1; //height algothrim, (+1 because it doesnt count the parent node)
+        }
+        return height;
     }
     void inorder(){
         inorderPrivate(root);
@@ -127,31 +136,34 @@ public:
             return nullptr;
         }
         else if (comparePtr(key,root_ptr->getData()) == -1){ //if key is less than parent, node to delete is in left subtree
-            root_ptr->left=deleteNodePrivate(root->left, key);
+            root_ptr->left=deleteNodePrivate(root_ptr->left, key);
         }
         else if (comparePtr(key,root_ptr->getData()) == 1){ //if key is greater than parent, node to delete is in right subtree
-            root_ptr->right=deleteNodePrivate(root->right, key);
+            root_ptr->right=deleteNodePrivate(root_ptr->right, key);
         }
         else{ //if key = data, we are at the node to be deleted
             if (root_ptr->left == nullptr && root_ptr->right == nullptr) { //CASE 1: node with no children
+                count--;
                 return nullptr;
             }
             else if (root_ptr->left == nullptr) { //CASE 2: right child only
                 AVLnode<T>* tempNode = root_ptr->right; //right child becomes successor
                 free(root_ptr); //delete node
+                count--;
                 return tempNode;
             }
             else if (root_ptr->right == nullptr) { //CASE 3: left child only
                 AVLnode<T>* tempNode = root_ptr->left; //left child becomes successor
                 free(root_ptr); //delete node
+                count--;
                 return tempNode;
             }
             //CASE 4: node with 2 children
             AVLnode<T>* tempNode = minValue(root_ptr->right); //get inorder successor (right, then left all the way down till null)
             root_ptr->setData(tempNode->getData()); //copy inorder successor value into node
             root_ptr->right = deleteNodePrivate(root_ptr->right, tempNode->getData()); //delete key
+            count--; //decrement cound by 1 when node is deleted;
         }
-        count--; //decrement cound by 1 when node is deleted;
         return balance(root_ptr); //balance before returning.
         //USING SEARCH FUNCTION WILL NOT WORK (cannot get access to parent node)
         // AVLnode<T>* tempRemove = root_ptr;
@@ -176,8 +188,8 @@ public:
     int calcBalanceFactor(AVLnode<T>* tree){
         int lHeight;
         int rHeight;
-        lHeight=root->calcHeight(tree->left); //calculate right height, it will also update rightHeight in AVLnode
-        rHeight=root->calcHeight(tree->right);
+        lHeight=calcHeight(tree->left); //calculate right height, it will also update rightHeight in AVLnode
+        rHeight=calcHeight(tree->right);
         return rHeight-lHeight; //right height - left height
     }
     bool checkBalance(AVLnode<T>* tree){

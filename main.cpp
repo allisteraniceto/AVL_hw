@@ -42,8 +42,8 @@ int main(){
     tree.insertNode(5); //right-left case
     tree.insertNode(57009);
     tree.inorder();
-    cout << "# of nodes: " << tree.getCount();
-    tree.searchTest(332);
+    cout << "# of nodes: " << tree.getCount() << endl;;
+    tree.searchTest(392);
     tree.searchTest(757);
     tree.searchTest(57009);
     tree.deleteNode(392); //CASE #2
@@ -51,7 +51,7 @@ int main(){
     tree.deleteNode(239); //CASE #3
     tree.deleteNode(32); //CASE #4
     tree.inorder();
-    cout << "# of nodes: " << tree.getCount();
+    cout << "# of nodes: " << tree.getCount() << endl;
     return 0;
 }
 
