@@ -127,10 +127,10 @@ public:
             return nullptr;
         }
         else if (comparePtr(key,root_ptr->getData()) == -1){ //if key is less than parent, node to delete is in left subtree
-            root_ptr->left=deleteNodePrivate(root->left, key);
+            root_ptr->left=deleteNodePrivate(root_ptr->left, key);
         }
         else if (comparePtr(key,root_ptr->getData()) == 1){ //if key is greater than parent, node to delete is in right subtree
-            root_ptr->right=deleteNodePrivate(root->right, key);
+            root_ptr->right=deleteNodePrivate(root_ptr->right, key);
         }
         else{ //if key = data, we are at the node to be deleted
             if (root_ptr->left == nullptr && root_ptr->right == nullptr) { //CASE 1: node with no children
