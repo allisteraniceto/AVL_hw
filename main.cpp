@@ -35,14 +35,21 @@ int main(){
     AVLtree<int> tree(comparePtr);
     tree.insertNode(2);
     tree.insertNode(392);
-    tree.insertNode(239);
-    tree.insertNode(32);
+    tree.insertNode(239); //left-right case
+    tree.insertNode(32); 
+    tree.insertNode(34);//right-right case
+    tree.insertNode(1); //left-left case
+    tree.insertNode(5); //right-left case
     tree.insertNode(57009);
     tree.inorder();
-    tree.searchTest(32);
+    cout << "# of nodes: " << tree.getCount();
+    tree.searchTest(332);
     tree.searchTest(757);
     tree.searchTest(57009);
-    tree.deleteNode(392);
+    tree.deleteNode(392); //CASE #2
+    tree.deleteNode(57009); //CASE #1
+    tree.deleteNode(239); //CASE #3
+    tree.deleteNode(32); //CASE #4
     tree.inorder();
     cout << "# of nodes: " << tree.getCount();
     return 0;

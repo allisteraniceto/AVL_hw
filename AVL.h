@@ -152,7 +152,7 @@ public:
             root_ptr->setData(tempNode->getData()); //copy inorder successor value into node
             root_ptr->right = deleteNodePrivate(root_ptr->right, tempNode->getData()); //delete key
         }
-
+        count--; //decrement cound by 1 when node is deleted;
         return balance(root_ptr); //balance before returning.
         //USING SEARCH FUNCTION WILL NOT WORK (cannot get access to parent node)
         // AVLnode<T>* tempRemove = root_ptr;
@@ -243,11 +243,11 @@ public:
     }
     AVLnode<T>* rlRotate(AVLnode<T>* parent){ //RIGHT LEFT ROTATE (left rotate, the llRotate)
         AVLnode<T>* tempParent;
-        tempParent=parent->right; //temp new parent set to left child
-        parent->right = llRotate(tempParent); //left rotation on new parent
+        tempParent=parent->left; //temp new parent set to left child
+        parent->left = rrRotate(tempParent); //left rotation on new parent
         //tempParent->left=parent->left->right; //right rotate around temp parent
         //tempParent->right=nullptr; //set temp parent right pointer to null, now left left case
-        cout << "Performed right left rotation";
-        return llRotate(parent); //return left left case
+        cout << "Performed right left rotation" << endl;
+        return llRotate(parent); //return left left case (can use llRotate to right rotate)
     }
 };
