@@ -116,8 +116,7 @@ public:
         else if (comparePtr(dataInsert, root_ptr->getData()) == 0){ //if data is repeated, print out error
             cout << "CANNOT REPEAT DATA" << endl;
         }
-        root_ptr = balance(root_ptr); //balance root if it is unbalanced
-        return root_ptr;
+        return balance(root_ptr); //balance if it is unbalanced
     }
     void deleteNode(T data){
         root=deleteNodePrivate(root, data);
