@@ -43,6 +43,7 @@ int main(){
     tree.searchTest(757);
     tree.searchTest(57009);
     tree.deleteNode(392);
+    tree.inorder();
     cout << "# of nodes: " << tree.getCount();
     return 0;
 }

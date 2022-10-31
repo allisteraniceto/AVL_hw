@@ -127,16 +127,33 @@ public:
         if (root_ptr==nullptr){ //if tree is empty or node is not found, return pointer
             return nullptr;
         }
-        else if (key < root_ptr->getData()){ //if key is less than parent, node to delete is in left subtree
+        else if (comparePtr(key,root_ptr->getData()) == -1){ //if key is less than parent, node to delete is in left subtree
             root_ptr->left=deleteNodePrivate(root->left, key);
         }
-        else if (key > root_ptr->getData()){ //if key is greater than parent, node to delete is in right subtree
+        else if (comparePtr(key,root_ptr->getData()) == 1){ //if key is greater than parent, node to delete is in right subtree
             root_ptr->right=deleteNodePrivate(root->right, key);
         }
         else{ //if key = data, we are at the node to be deleted
-            
+            if (root_ptr->left == nullptr && root_ptr->right == nullptr) { //CASE 1: node with no children
+                return nullptr;
+            }
+            else if (root_ptr->left == nullptr) { //CASE 2: right child only
+                AVLnode<T>* tempNode = root_ptr->right; //right child becomes successor
+                free(root_ptr); //delete node
+                return tempNode;
+            }
+            else if (root_ptr->right == nullptr) { //CASE 3: left child only
+                AVLnode<T>* tempNode = root_ptr->left; //left child becomes successor
+                free(root_ptr); //delete node
+                return tempNode;
+            }
+            //CASE 4: node with 2 children
+            AVLnode<T>* tempNode = minValue(root_ptr->right); //get inorder successor (right, then left all the way down till null)
+            root_ptr->setData(tempNode->getData()); //copy inorder successor value into node
+            root_ptr->right = deleteNodePrivate(root_ptr->right, tempNode->getData()); //delete key
         }
 
+        return balance(root_ptr); //balance before returning.
         //USING SEARCH FUNCTION WILL NOT WORK (cannot get access to parent node)
         // AVLnode<T>* tempRemove = root_ptr;
         // if (root_ptr=nullptr){ //if tree is empty, return pointer
@@ -150,6 +167,12 @@ public:
                 
         //     }
         // }
+    }
+    AVLnode<T>* minValue(AVLnode<T>* tree) { //get mininum value of a bst
+        while (tree->left != nullptr) {
+            tree = tree->left;
+        }
+        return tree;
     }
     int calcBalanceFactor(AVLnode<T>* tree){
         int lHeight;
@@ -201,8 +224,8 @@ public:
     }
     AVLnode<T>* lrRotate(AVLnode<T>* parent){ //LEFT RIGHT ROTATE (right rotate, then rrRotate)
         AVLnode<T>* tempParent; //for first rotation
-        tempParent = parent->right;
-        parent->right = llRotate(tempParent);
+        tempParent = parent->right; //right child becomes new parent
+        parent->right = llRotate(tempParent); // right rotation on new parent
         //tempParent=parent->right->left; //right child becomes temp new parent used for right rotate
         //tempParent->right=parent->right; // right rotation on temp new parent
         //parent->right=tempParent; //parent right aqquires right rotated tempParent
@@ -221,7 +244,7 @@ public:
     AVLnode<T>* rlRotate(AVLnode<T>* parent){ //RIGHT LEFT ROTATE (left rotate, the llRotate)
         AVLnode<T>* tempParent;
         tempParent=parent->right; //temp new parent set to left child
-        parent->right = llRotate(tempParent);
+        parent->right = llRotate(tempParent); //left rotation on new parent
         //tempParent->left=parent->left->right; //right rotate around temp parent
         //tempParent->right=nullptr; //set temp parent right pointer to null, now left left case
         cout << "Performed right left rotation";
