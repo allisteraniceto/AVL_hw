@@ -136,7 +136,7 @@ public:
         }
         else{ //if key = data, we are at the node to be deleted
             if (root_ptr->left == nullptr && root_ptr->right == nullptr) { //CASE 1: node with no children
-                count--;
+                count--; //decrement cound by 1 when node is deleted;
                 return nullptr;
             }
             else if (root_ptr->left == nullptr) { //CASE 2: right child only
@@ -156,7 +156,6 @@ public:
                 AVLnode<T>* tempNode = minValue(root_ptr->right); //get inorder successor (right, then left all the way down till null)
                 root_ptr->setData(tempNode->getData()); //copy inorder successor value into node
                 root_ptr->right = deleteNodePrivate(root_ptr->right, tempNode->getData()); //delete key
-                count--; //decrement cound by 1 when node is deleted;
             }
         } 
         return balance(root_ptr); //balance before returning.
