@@ -11,8 +11,6 @@ private:
 public:
     AVLnode<T>* left; //pointer to left child
     AVLnode<T>* right; //pointer to right child
-    int leftHeight;
-    int rightHeight;
     AVLnode() { //defualt constructor
         this->data = NULL;
         right = left = nullptr;
@@ -31,10 +29,12 @@ public:
     }
     int calcHeight(AVLnode<T>* tree){
         int height=0; //initialize height variable
+        int lH = 0;
+        int rH = 0;
         if (tree != nullptr){ //while not a leaf node
-            leftHeight=calcHeight(tree->left); //get height of left tree recursively
-            rightHeight=calcHeight(tree->right);
-            int maxHeight=max(leftHeight, rightHeight); //returns higher value
+            lH=calcHeight(tree->left); //get height of left tree recursively
+            rH=calcHeight(tree->right);
+            int maxHeight=max(lH, rH); //returns higher value
             height=maxHeight+1; //height algothrim, (+1 because it doesnt count the parent node)
         }
         return height;
@@ -134,24 +134,29 @@ public:
         }
         else{ //if key = data, we are at the node to be deleted
             if (root_ptr->left == nullptr && root_ptr->right == nullptr) { //CASE 1: node with no children
+                count--;
                 return nullptr;
             }
             else if (root_ptr->left == nullptr) { //CASE 2: right child only
                 AVLnode<T>* tempNode = root_ptr->right; //right child becomes successor
                 free(root_ptr); //delete node
+                count--;
                 return tempNode;
             }
             else if (root_ptr->right == nullptr) { //CASE 3: left child only
                 AVLnode<T>* tempNode = root_ptr->left; //left child becomes successor
                 free(root_ptr); //delete node
+                count--;
                 return tempNode;
             }
-            //CASE 4: node with 2 children
-            AVLnode<T>* tempNode = minValue(root_ptr->right); //get inorder successor (right, then left all the way down till null)
-            root_ptr->setData(tempNode->getData()); //copy inorder successor value into node
-            root_ptr->right = deleteNodePrivate(root_ptr->right, tempNode->getData()); //delete key
-        }
-        count--; //decrement cound by 1 when node is deleted;
+            else {
+                //CASE 4: node with 2 children
+                AVLnode<T>* tempNode = minValue(root_ptr->right); //get inorder successor (right, then left all the way down till null)
+                root_ptr->setData(tempNode->getData()); //copy inorder successor value into node
+                root_ptr->right = deleteNodePrivate(root_ptr->right, tempNode->getData()); //delete key
+                count--; //decrement cound by 1 when node is deleted;
+            }
+        } 
         return balance(root_ptr); //balance before returning.
         //USING SEARCH FUNCTION WILL NOT WORK (cannot get access to parent node)
         // AVLnode<T>* tempRemove = root_ptr;
