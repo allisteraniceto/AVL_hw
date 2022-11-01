@@ -11,6 +11,8 @@ private:
 public:
     AVLnode<T>* left; //pointer to left child
     AVLnode<T>* right; //pointer to right child
+    int leftHeight;
+    int rightHeight;
     AVLnode() { //defualt constructor
         this->data = NULL;
         right = left = nullptr;
